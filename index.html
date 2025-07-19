@@ -1,69 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LuxFlix</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body class="bg-[#0f172a] text-white">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LuxFlix Originals</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+</head>
+<body class="bg-blue-950 text-white">
 
-    <!-- 🌐 Navbar -->
-    <nav class="flex items-center justify-between px-4 py-2 bg-[#0f172a] shadow-md">
-      <div class="text-xl font-bold">LuxFlix Originals</div>
-      <div class="flex gap-4 items-center">
-        <a href="index.html" class="text-sm hover:text-gray-300 transition">Home</a>
-        <a href="login.html" id="loginLink" class="text-sm hover:text-gray-300 transition">Login</a>
-        <a href="register.html" id="registerLink" class="text-sm hover:text-gray-300 transition">Register</a>
-        <button id="logoutBtn" class="hidden bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 text-sm transition">
-          Logout
-        </button>
-      </div>
-    </nav>
+  <nav class="flex justify-between items-center p-4 bg-blue-800 shadow-lg">
+    <h1 class="text-2xl font-bold">LuxFlix Originals</h1>
+    <div id="navbar-links" class="flex space-x-4"></div>
+  </nav>
 
-    <!-- 🔍 Search Bar -->
-    <div class="p-4">
-      <input
-        type="text"
-        placeholder="Search videos..."
-        class="w-full p-2 rounded bg-[#1e293b] text-white placeholder-gray-400"
-      />
-    </div>
-
-    <!-- 🎬 Video Sections -->
-    <div class="p-4 space-y-6">
-      <div>
+  <div class="p-6">
+    <input type="text" placeholder="Search videos..." class="w-full p-2 rounded bg-blue-900 text-white placeholder-gray-300 mb-4"/>
+    
+    <div class="grid gap-4 md:grid-cols-3">
+      <div class="bg-blue-900 p-4 rounded-lg shadow hover:scale-105 transition">
         <h2 class="text-xl font-semibold">Mind Bender</h2>
-        <p class="text-sm text-gray-400">Sci-Fi</p>
+        <p class="text-sm text-gray-300">Sci-Fi</p>
       </div>
-      <div>
+      <div class="bg-blue-900 p-4 rounded-lg shadow hover:scale-105 transition">
         <h2 class="text-xl font-semibold">Love & Dust</h2>
-        <p class="text-sm text-gray-400">Drama</p>
+        <p class="text-sm text-gray-300">Drama</p>
       </div>
-      <div>
+      <div class="bg-blue-900 p-4 rounded-lg shadow hover:scale-105 transition">
         <h2 class="text-xl font-semibold">Gun Rush</h2>
-        <p class="text-sm text-gray-400">Action</p>
+        <p class="text-sm text-gray-300">Action</p>
       </div>
     </div>
+  </div>
 
-    <!-- ✅ Auth Script -->
-    <script>
-      // Check user session
-      const isLoggedIn = localStorage.getItem('luxflixUser');
-      const loginLink = document.getElementById('loginLink');
-      const registerLink = document.getElementById('registerLink');
-      const logoutBtn = document.getElementById('logoutBtn');
-
-      if (isLoggedIn) {
-        loginLink.style.display = 'none';
-        registerLink.style.display = 'none';
-        logoutBtn.style.display = 'inline-block';
-      }
-
-      logoutBtn.addEventListener('click', () => {
-        localStorage.removeItem('luxflixUser');
-        window.location.href = 'index.html';
-      });
-    </script>
-  </body>
+  <script src="auth.js"></script>
+</body>
 </html>

@@ -1,108 +1,71 @@
-// Firebase Auth
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {
-  getAuth,
-  onAuthStateChanged,
-  signOut,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+document.addEventListener("DOMContentLoaded", () => {
+  const loginForm = document.getElementById("loginForm");
+  const registerForm = document.getElementById("registerForm");
 
-// Firebase config
-const firebaseConfig = {
-  apiKey: "AIzaSyA5ahePpuAksgY6dDLfAtNuwGOwe4Xbe7E",
-  authDomain: "luxflix-2455a.firebaseapp.com",
-  projectId: "luxflix-2455a",
-  storageBucket: "luxflix-2455a.appspot.com",
-  messagingSenderId: "166343472796",
-  appId: "1:166343472796:web:373b1fa92ef47305da1f59",
-  measurementId: "G-4HSDMBK1BR"
-};
+  if (loginForm) {
+    loginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+      const users = JSON.parse(localStorage.getItem("users")) || [];
+      const foundUser = users.find((u) => u.email === email && u.password === password);
 
-// Init
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+      if (foundUser) {
+        localStorage.setItem("loggedInUser", JSON.stringify(foundUser));
+        showToast("Login successful!");
+        setTimeout(() => window.location.href = "index.html", 1500);
+      } else {
+        showToast("Invalid credentials.");
+      }
+    });
+  }
 
-// Track User Login State
-onAuthStateChanged(auth, (user) => {
-  const loginLink = document.getElementById("loginLink");
-  const registerLink = document.getElementById("registerLink");
-  const logoutBtn = document.getElementById("logoutBtn");
+  if (registerForm) {
+    registerForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = document.getElementById("registerEmail").value;
+      const password = document.getElementById("registerPassword").value;
+      const users = JSON.parse(localStorage.getItem("users")) || [];
 
-  if (user) {
-    // User is logged in
-    if (loginLink) loginLink.style.display = "none";
-    if (registerLink) registerLink.style.display = "none";
-    if (logoutBtn) logoutBtn.classList.remove("hidden");
-  } else {
-    // User is logged out
-    if (loginLink) loginLink.style.display = "inline-block";
-    if (registerLink) registerLink.style.display = "inline-block";
-    if (logoutBtn) logoutBtn.classList.add("hidden");
+      const userExists = users.some((u) => u.email === email);
+      if (userExists) {
+        showToast("User already exists.");
+        return;
+      }
+
+      users.push({ email, password });
+      localStorage.setItem("users", JSON.stringify(users));
+      showToast("Registration successful!");
+      setTimeout(() => window.location.href = "login.html", 1500);
+    });
+  }
+
+  const navbar = document.getElementById("navbar-links");
+  if (navbar) {
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    if (user) {
+      navbar.innerHTML = `
+        <span class="text-white mr-4">Welcome, ${user.email}</span>
+        <button onclick="logout()" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-white">Logout</button>
+      `;
+    } else {
+      navbar.innerHTML = `
+        <a href="login.html" class="text-white hover:underline mr-4">Login</a>
+        <a href="register.html" class="text-white hover:underline">Register</a>
+      `;
+    }
   }
 });
 
-// Handle Logout
-const logoutBtn = document.getElementById("logoutBtn");
-if (logoutBtn) {
-  logoutBtn.addEventListener("click", () => {
-    signOut(auth)
-      .then(() => {
-        alert("✅ Logged out.");
-        window.location.href = "index.html";
-      })
-      .catch((error) => {
-        alert("❌ Logout error: " + error.message);
-      });
-  });
+function logout() {
+  localStorage.removeItem("loggedInUser");
+  location.reload();
 }
 
-// Login Form
-const loginForm = document.getElementById("loginForm");
-if (loginForm) {
-  loginForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const email = e.target.querySelector("#email");
-    const password = e.target.querySelector("#password");
-    const button = e.target.querySelector("button");
-
-    button.disabled = true;
-    button.textContent = "Logging in...";
-
-    signInWithEmailAndPassword(auth, email.value, password.value)
-      .then(() => {
-        alert("✅ Login successful!");
-        window.location.href = "index.html";
-      })
-      .catch((err) => {
-        alert("❌ " + err.message);
-        button.disabled = false;
-        button.textContent = "Login";
-      });
-  });
-}
-
-// Register Form
-const registerForm = document.getElementById("registerForm");
-if (registerForm) {
-  registerForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const email = e.target.querySelector("#email");
-    const password = e.target.querySelector("#password");
-    const button = e.target.querySelector("button");
-
-    button.disabled = true;
-    button.textContent = "Registering...";
-
-    createUserWithEmailAndPassword(auth, email.value, password.value)
-      .then(() => {
-        alert("✅ Registration complete!");
-        window.location.href = "login.html";
-      })
-      .catch((err) => {
-        alert("❌ " + err.message);
-        button.disabled = false;
-        button.textContent = "Register";
-      });
-  });
+function showToast(message) {
+  const toast = document.createElement("div");
+  toast.innerText = message;
+  toast.className = "fixed bottom-5 left-5 bg-blue-600 text-white px-4 py-2 rounded shadow-lg z-50 animate-bounce";
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 1500);
 }
