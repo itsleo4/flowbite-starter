@@ -2,35 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>LuxFlix - Originals</title>
-  <link rel="stylesheet" href="./assets/dist/css/main.css" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-black text-white">
 
   <div class="container mx-auto px-4 py-8">
-    <h1 class="text-white text-4xl font-bold mb-6 text-center">LuxFlix Originals</h1>
-    <div id="video-container" class="flex flex-wrap justify-between gap-6">
-      <!-- Video Cards -->
-      <div class="bg-gray-900 rounded-lg p-4 w-full md:w-[48%] lg:w-[31%] shadow-lg">
-        <video controls class="w-full rounded mb-2">
-          <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
-        </video>
-        <h2 class="text-xl font-semibold">Video 1</h2>
-        <p class="text-sm text-gray-400">This is a sample LuxFlix original.</p>
-      </div>
+    <h1 class="text-4xl font-bold mb-6">LuxFlix Originals</h1>
 
-      <div class="bg-gray-900 rounded-lg p-4 w-full md:w-[48%] lg:w-[31%] shadow-lg">
-        <video controls class="w-full rounded mb-2">
-          <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4" />
-        </video>
-        <h2 class="text-xl font-semibold">Video 2</h2>
-        <p class="text-sm text-gray-400">This is a sample LuxFlix original.</p>
-      </div>
+    <!-- Search and Filter -->
+    <div class="flex items-center gap-4 mb-8">
+      <input id="searchInput" type="text" placeholder="Search videos..." class="p-2 rounded w-full text-black">
+      <select id="categoryFilter" class="p-2 rounded text-black">
+        <option value="">All</option>
+        <option value="Action">Action</option>
+        <option value="Drama">Drama</option>
+        <option value="Sci-Fi">Sci-Fi</option>
+      </select>
+    </div>
 
-      <!-- Repeat the same structure for Video 3 to 5 -->
+    <!-- Video Cards -->
+    <div id="video-container" class="grid md:grid-cols-3 gap-6">
+      <!-- Cards will load here -->
     </div>
   </div>
 
+  <script src="data.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

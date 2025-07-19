@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Video View - LuxFlix</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-black text-white">
+
+  <div class="container mx-auto px-4 py-8" id="video-details">
+    <!-- Video details will load here -->
+  </div>
+
+  <script src="data.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const videoId = parseInt(params.get("id"));
+    const video = videos.find(v => v.id === videoId);
+
+    if (video) {
+      document.getElementById("video-details").innerHTML = `
+        <h1 class="text-3xl font-bold mb-4">${video.title}</h1>
+        <video controls class="w-full mb-4">
+          <source src="${video.url}" type="video/mp4">
+        </video>
+        <p class="text-gray-300">${video.description}</p>
+        <p class="mt-2 text-sm text-gray-400">Category: ${video.category}</p>
+      `;
+    } else {
+      document.getElementById("video-details").innerHTML = "<p>Video not found.</p>";
+    }
+  </script>
+</body>
+</html>
