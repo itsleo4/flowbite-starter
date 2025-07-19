@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,10 +7,7 @@
   <link href="https://cdn.jsdelivr.net/npm/flowbite@1.6.5/dist/flowbite.min.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
-    body {
-      background-color: #000;
-      color: #fff;
-    }
+    body { background-color: #000; color: #fff; }
     .card {
       background: #111;
       border-radius: 1rem;
@@ -20,6 +16,9 @@
     }
     .card:hover {
       background: #222;
+    }
+    .like-btn:hover {
+      transform: scale(1.1);
     }
   </style>
 </head>
@@ -49,6 +48,15 @@
     const categoryButtons = document.getElementById("category-buttons");
     const searchInput = document.getElementById("search");
 
+    // Generate random views and store likes per session
+    const viewsMap = {};
+    const likesMap = {};
+
+    videos.forEach(v => {
+      viewsMap[v.title] = (Math.random() * 10 + 1).toFixed(1) + "M views";
+      likesMap[v.title] = 0;
+    });
+
     function renderVideos(filter = "", category = "All") {
       videoGrid.innerHTML = "";
       let filtered = videos.filter(v =>
@@ -64,13 +72,29 @@
       for (let video of filtered) {
         let div = document.createElement("div");
         div.className = "card";
+
         div.innerHTML = `
           <img src="${video.thumbnail}" class="rounded mb-2" />
           <h2 class="text-xl font-semibold">${video.title}</h2>
-          <p class="text-sm text-gray-400">${video.category}</p>
+          <p class="text-sm text-gray-400 mb-2">${video.category}</p>
+          <div class="flex items-center justify-between text-sm text-gray-400">
+            <span>${viewsMap[video.title]}</span>
+            <div class="flex items-center gap-1">
+              <button class="like-btn text-red-500 text-lg" data-title="${video.title}">❤️</button>
+              <span id="like-count-${video.title}" class="text-white">${likesMap[video.title]}</span>
+            </div>
+          </div>
         `;
         videoGrid.appendChild(div);
       }
+
+      document.querySelectorAll(".like-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const title = btn.dataset.title;
+          likesMap[title]++;
+          document.getElementById(`like-count-${title}`).innerText = likesMap[title];
+        });
+      });
     }
 
     function renderCategories() {
@@ -93,5 +117,4 @@
     renderVideos();
   </script>
 </body>
-
 </html>
