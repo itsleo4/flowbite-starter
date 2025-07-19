@@ -4,70 +4,40 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LuxFlix</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-    <script defer src="https://unpkg.com/flowbite@1.6.5/dist/flowbite.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
+  <body class="bg-[#0f172a] text-white">
 
-  <body class="bg-black text-white min-h-screen">
-    <div class="container mx-auto px-4 py-8">
-      <h1 class="text-4xl font-bold mb-4">LuxFlix Originals</h1>
-      <input
-        type="text"
-        placeholder="Search videos..."
-        class="w-full p-2 mb-6 text-black rounded"
-        id="searchBar"
-      />
+    <!-- 🌐 Navbar -->
+    <nav class="flex justify-between items-center p-4 bg-[#1e293b] shadow-md">
+      <h1 class="text-2xl font-bold">LuxFlix Originals</h1>
+      <div class="space-x-4 text-sm">
+        <a href="index.html" class="hover:underline">Home</a>
+        <a href="login.html" class="hover:underline">Login</a>
+        <a href="register.html" class="hover:underline">Register</a>
+      </div>
+    </nav>
 
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" id="video-container">
-        <div class="bg-gray-900 rounded-lg p-4">
-          <h2 class="text-xl font-bold">Mind Bender</h2>
-          <p class="text-sm text-gray-400">Sci-Fi</p>
-        </div>
+    <!-- 🔍 Search Bar -->
+    <div class="p-4">
+      <input type="text" placeholder="Search videos..." class="w-full p-2 rounded bg-[#1e293b] text-white placeholder-gray-400" />
+    </div>
 
-        <div class="bg-gray-900 rounded-lg p-4">
-          <h2 class="text-xl font-bold">Love & Dust</h2>
-          <p class="text-sm text-gray-400">Drama</p>
-        </div>
-
-        <div class="bg-gray-900 rounded-lg p-4">
-          <h2 class="text-xl font-bold">Gun Rush</h2>
-          <p class="text-sm text-gray-400">Action</p>
-        </div>
+    <!-- 🎬 Video Sections -->
+    <div class="p-4 space-y-6">
+      <div>
+        <h2 class="text-xl font-semibold">Mind Bender</h2>
+        <p class="text-sm text-gray-400">Sci-Fi</p>
+      </div>
+      <div>
+        <h2 class="text-xl font-semibold">Love & Dust</h2>
+        <p class="text-sm text-gray-400">Drama</p>
+      </div>
+      <div>
+        <h2 class="text-xl font-semibold">Gun Rush</h2>
+        <p class="text-sm text-gray-400">Action</p>
       </div>
     </div>
 
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics-compat.js"></script>
-
-    <!-- Firebase Config -->
-    <script>
-      const firebaseConfig = {
-        apiKey: "AIzaSyA5ahePpuAksgY6dDLfAtNuwGOwe4Xbe7E",
-        authDomain: "luxflix-2455a.firebaseapp.com",
-        projectId: "luxflix-2455a",
-        storageBucket: "luxflix-2455a.firebasestorage.app",
-        messagingSenderId: "166343472796",
-        appId: "1:166343472796:web:373b1fa92ef47305da1f59",
-        measurementId: "G-4HSDMBK1BR"
-      };
-
-      firebase.initializeApp(firebaseConfig);
-      firebase.analytics();
-    </script>
-
-    <!-- App Logic (optional) -->
-    <script>
-      const searchBar = document.getElementById("searchBar");
-      const cards = document.querySelectorAll("#video-container > div");
-
-      searchBar.addEventListener("input", () => {
-        const query = searchBar.value.toLowerCase();
-        cards.forEach((card) => {
-          const text = card.innerText.toLowerCase();
-          card.style.display = text.includes(query) ? "block" : "none";
-        });
-      });
-    </script>
   </body>
 </html>
