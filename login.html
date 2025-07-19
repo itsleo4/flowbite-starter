@@ -1,23 +1,35 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-gray-900 text-white flex items-center justify-center h-screen">
+<body>
+  <button id="theme-toggle">🌞</button>
 
-  <div class="bg-gray-800 p-8 rounded shadow-md w-full max-w-md">
-    <h2 class="text-2xl font-bold mb-6 text-center">Login to LuxFlix</h2>
-    <form id="loginForm" class="space-y-4">
-      <input type="email" id="email" placeholder="Email" class="w-full p-2 border border-gray-600 rounded bg-gray-700 text-white" required />
-      <input type="password" id="password" placeholder="Password" class="w-full p-2 border border-gray-600 rounded bg-gray-700 text-white" required />
-      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded">Login</button>
-    </form>
-    <p class="mt-4 text-sm text-center">Don't have an account? <a href="register.html" class="text-blue-400 hover:underline">Register</a></p>
+  <div class="form-box">
+    <h2>Login</h2>
+    <input id="email" type="email" placeholder="Email" />
+    <input id="password" type="password" placeholder="Password" />
+    <button id="loginBtn">Login</button>
+    <p>Don't have an account? <a href="register.html">Register</a></p>
   </div>
 
-  <script type="module" src="js/auth.js"></script>
+  <script type="module">
+    import { loginUser } from './auth.js';
+
+    document.getElementById('loginBtn').onclick = async () => {
+      const email = document.getElementById('email').value;
+      const pass = document.getElementById('password').value;
+      try {
+        await loginUser(email, pass);
+        window.location.href = "index.html";
+      } catch (e) {
+        alert(e.message);
+      }
+    };
+  </script>
+  <script src="theme-toggle.js"></script>
 </body>
 </html>

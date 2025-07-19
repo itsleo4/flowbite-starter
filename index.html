@@ -1,23 +1,48 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>LuxFlix</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <title>Home</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-gray-900 text-white min-h-screen flex flex-col items-center justify-center space-y-4">
-  <div class="text-center">
-    <h1 class="text-3xl font-bold mb-4">Welcome to LuxFlix</h1>
-    <div class="flex justify-center space-x-4">
-      <a id="loginLink" href="login.html" class="px-4 py-2 bg-blue-600 rounded hover:bg-blue-700">Login</a>
-      <a id="registerLink" href="register.html" class="px-4 py-2 bg-green-600 rounded hover:bg-green-700">Register</a>
-      <a id="profileLink" href="#" class="hidden px-4 py-2 bg-yellow-500 rounded hover:bg-yellow-600">Profile</a>
-      <button id="logoutBtn" class="hidden px-4 py-2 bg-red-600 rounded hover:bg-red-700">Logout</button>
-    </div>
-  </div>
-  <button id="themeToggle" class="text-xl mt-8">☀️</button>
+<body>
+  <button id="theme-toggle">🌞</button>
 
-  <script type="module" src="js/auth.js"></script>
+  <div id="navbar">
+    <span id="user-email"></span>
+    <button id="logoutBtn" style="display: none;">Logout</button>
+    <a id="loginLink" href="login.html">Login</a>
+    <a id="registerLink" href="register.html">Register</a>
+  </div>
+
+  <h1>Welcome to Luxflix</h1>
+
+  <script type="module">
+    import { logoutUser, authListener } from './auth.js';
+
+    const logoutBtn = document.getElementById('logoutBtn');
+    const userEmail = document.getElementById('user-email');
+    const loginLink = document.getElementById('loginLink');
+    const registerLink = document.getElementById('registerLink');
+
+    authListener((user) => {
+      if (user) {
+        userEmail.innerText = `👋 ${user.email}`;
+        logoutBtn.style.display = 'inline-block';
+        loginLink.style.display = 'none';
+        registerLink.style.display = 'none';
+      } else {
+        userEmail.innerText = '';
+        logoutBtn.style.display = 'none';
+        loginLink.style.display = 'inline-block';
+        registerLink.style.display = 'inline-block';
+      }
+    });
+
+    logoutBtn.onclick = async () => {
+      await logoutUser();
+    };
+  </script>
+  <script src="theme-toggle.js"></script>
 </body>
 </html>
