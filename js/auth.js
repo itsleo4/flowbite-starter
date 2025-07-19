@@ -22,8 +22,8 @@ const registerForm = document.getElementById("registerForm");
 if (registerForm) {
   registerForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+    const email = e.target.querySelector("#email").value;
+    const password = e.target.querySelector("#password").value;
 
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -41,8 +41,8 @@ const loginForm = document.getElementById("loginForm");
 if (loginForm) {
   loginForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+    const email = e.target.querySelector("#email").value;
+    const password = e.target.querySelector("#password").value;
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
