@@ -4,34 +4,26 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>LuxFlix Originals</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
 </head>
-<body class="bg-blue-950 text-white">
+<body class="bg-gray-100 text-gray-900">
 
-  <nav class="flex justify-between items-center p-4 bg-blue-800 shadow-lg">
-    <h1 class="text-2xl font-bold">LuxFlix Originals</h1>
-    <div id="navbar-links" class="flex space-x-4"></div>
+  <!-- Navbar -->
+  <nav class="bg-gray-900 p-4 text-white flex justify-between items-center">
+    <h1 class="text-xl font-bold">LuxFlix Originals</h1>
+    <div class="space-x-4">
+      <span id="userEmail" class="text-blue-400 font-medium"></span>
+      <a href="login.html" id="loginNav" class="hover:underline">Login</a>
+      <a href="register.html" id="registerNav" class="hover:underline">Register</a>
+      <button id="logoutNav" class="hover:underline hidden">Logout</button>
+    </div>
   </nav>
 
-  <div class="p-6">
-    <input type="text" placeholder="Search videos..." class="w-full p-2 rounded bg-blue-900 text-white placeholder-gray-300 mb-4"/>
-    
-    <div class="grid gap-4 md:grid-cols-3">
-      <div class="bg-blue-900 p-4 rounded-lg shadow hover:scale-105 transition">
-        <h2 class="text-xl font-semibold">Mind Bender</h2>
-        <p class="text-sm text-gray-300">Sci-Fi</p>
-      </div>
-      <div class="bg-blue-900 p-4 rounded-lg shadow hover:scale-105 transition">
-        <h2 class="text-xl font-semibold">Love & Dust</h2>
-        <p class="text-sm text-gray-300">Drama</p>
-      </div>
-      <div class="bg-blue-900 p-4 rounded-lg shadow hover:scale-105 transition">
-        <h2 class="text-xl font-semibold">Gun Rush</h2>
-        <p class="text-sm text-gray-300">Action</p>
-      </div>
-    </div>
-  </div>
+  <main class="p-4">
+    <h2 class="text-2xl font-semibold mb-4">Welcome to LuxFlix Originals</h2>
+    <p>Enjoy exclusive content powered by Firebase Authentication.</p>
+  </main>
 
-  <script src="auth.js"></script>
+  <script type="module" src="js/auth.js"></script>
 </body>
 </html>

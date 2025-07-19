@@ -1,71 +1,84 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const loginForm = document.getElementById("loginForm");
-  const registerForm = document.getElementById("registerForm");
+// js/auth.js
 
-  if (loginForm) {
-    loginForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const email = document.getElementById("loginEmail").value;
-      const password = document.getElementById("loginPassword").value;
-      const users = JSON.parse(localStorage.getItem("users")) || [];
-      const foundUser = users.find((u) => u.email === email && u.password === password);
+// Firebase Configuration
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-      if (foundUser) {
-        localStorage.setItem("loggedInUser", JSON.stringify(foundUser));
-        showToast("Login successful!");
-        setTimeout(() => window.location.href = "index.html", 1500);
-      } else {
-        showToast("Invalid credentials.");
-      }
-    });
-  }
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  appId: "YOUR_APP_ID",
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-  if (registerForm) {
-    registerForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const email = document.getElementById("registerEmail").value;
-      const password = document.getElementById("registerPassword").value;
-      const users = JSON.parse(localStorage.getItem("users")) || [];
+// Register
+const registerForm = document.getElementById("registerForm");
+if (registerForm) {
+  registerForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
-      const userExists = users.some((u) => u.email === email);
-      if (userExists) {
-        showToast("User already exists.");
-        return;
-      }
-
-      users.push({ email, password });
-      localStorage.setItem("users", JSON.stringify(users));
-      showToast("Registration successful!");
-      setTimeout(() => window.location.href = "login.html", 1500);
-    });
-  }
-
-  const navbar = document.getElementById("navbar-links");
-  if (navbar) {
-    const user = JSON.parse(localStorage.getItem("loggedInUser"));
-    if (user) {
-      navbar.innerHTML = `
-        <span class="text-white mr-4">Welcome, ${user.email}</span>
-        <button onclick="logout()" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-white">Logout</button>
-      `;
-    } else {
-      navbar.innerHTML = `
-        <a href="login.html" class="text-white hover:underline mr-4">Login</a>
-        <a href="register.html" class="text-white hover:underline">Register</a>
-      `;
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      // Redirect automatically after success
+      window.location.href = "login.html";
+    } catch (error) {
+      alert("Error: " + error.message);
     }
+  });
+}
+
+// Login
+const loginForm = document.getElementById("loginForm");
+if (loginForm) {
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      // Redirect automatically after login
+      window.location.href = "index.html";
+    } catch (error) {
+      alert("Login failed: " + error.message);
+    }
+  });
+}
+
+// Show/hide UI on homepage based on login
+const loginNav = document.getElementById("loginNav");
+const registerNav = document.getElementById("registerNav");
+const logoutNav = document.getElementById("logoutNav");
+const userEmail = document.getElementById("userEmail");
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    if (loginNav) loginNav.style.display = "none";
+    if (registerNav) registerNav.style.display = "none";
+    if (logoutNav) logoutNav.style.display = "inline";
+    if (userEmail) userEmail.innerText = user.email;
+  } else {
+    if (loginNav) loginNav.style.display = "inline";
+    if (registerNav) registerNav.style.display = "inline";
+    if (logoutNav) logoutNav.style.display = "none";
+    if (userEmail) userEmail.innerText = "";
   }
 });
 
-function logout() {
-  localStorage.removeItem("loggedInUser");
-  location.reload();
-}
-
-function showToast(message) {
-  const toast = document.createElement("div");
-  toast.innerText = message;
-  toast.className = "fixed bottom-5 left-5 bg-blue-600 text-white px-4 py-2 rounded shadow-lg z-50 animate-bounce";
-  document.body.appendChild(toast);
-  setTimeout(() => toast.remove(), 1500);
+// Logout
+if (logoutNav) {
+  logoutNav.addEventListener("click", async () => {
+    await signOut(auth);
+    window.location.href = "index.html";
+  });
 }
