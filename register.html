@@ -19,7 +19,9 @@
         <label for="password" class="block mb-1">Password</label>
         <input type="password" id="password" class="w-full px-4 py-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500" required />
       </div>
-      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded">Register</button>
+      <button id="registerBtn" type="submit" class="w-full bg-blue-600 hover:bg-blue-700 transition duration-150 text-white py-2 px-4 rounded">
+        Register
+      </button>
     </form>
     <p class="mt-4 text-center text-sm">
       Already have an account?
@@ -27,6 +29,24 @@
     </p>
   </div>
 
-  <script type="module" src="js/auth.js"></script>
+  <script>
+    document.getElementById("registerForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (!email || !password) {
+        alert("Please fill in all fields");
+        return;
+      }
+
+      // Store user data (for demo only — in real life, use a server)
+      localStorage.setItem("luxflix_user", JSON.stringify({ email, password }));
+
+      alert("Registration successful! Redirecting to login...");
+      window.location.href = "login.html";
+    });
+  </script>
 </body>
 </html>
