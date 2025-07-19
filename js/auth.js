@@ -82,3 +82,32 @@ if (logoutNav) {
     window.location.href = "index.html";
   });
 }
+// UI updates based on auth state
+onAuthStateChanged(auth, (user) => {
+  const loginNav = document.getElementById("loginNav");
+  const registerNav = document.getElementById("registerNav");
+  const logoutNav = document.getElementById("logoutNav");
+  const userEmail = document.getElementById("userEmail");
+
+  if (user) {
+    if (loginNav) loginNav.style.display = "none";
+    if (registerNav) registerNav.style.display = "none";
+    if (logoutNav) logoutNav.style.display = "inline-block";
+    if (userEmail) {
+      userEmail.innerText = user.email;
+      userEmail.style.display = "inline-block";
+    }
+  } else {
+    if (loginNav) loginNav.style.display = "inline-block";
+    if (registerNav) registerNav.style.display = "inline-block";
+    if (logoutNav) logoutNav.style.display = "none";
+    if (userEmail) userEmail.style.display = "none";
+  }
+
+  if (logoutNav) {
+    logoutNav.addEventListener("click", async () => {
+      await signOut(auth);
+      window.location.href = "index.html";
+    });
+  }
+});

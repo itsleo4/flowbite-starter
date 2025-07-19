@@ -3,27 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LuxFlix Originals</title>
+  <title>LuxFlix Home</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <script>
+    const savedTheme = localStorage.getItem("theme") || "dark";
+    document.documentElement.classList.add(savedTheme);
+  </script>
 </head>
-<body class="bg-gray-100 text-gray-900">
+<body class="dark:bg-gray-900 dark:text-white light:bg-gray-100 light:text-black min-h-screen flex flex-col transition duration-300">
 
-  <!-- Navbar -->
-  <nav class="bg-gray-900 p-4 text-white flex justify-between items-center">
-    <h1 class="text-xl font-bold">LuxFlix Originals</h1>
-    <div class="space-x-4">
-      <span id="userEmail" class="text-blue-400 font-medium"></span>
-      <a href="login.html" id="loginNav" class="hover:underline">Login</a>
-      <a href="register.html" id="registerNav" class="hover:underline">Register</a>
-      <button id="logoutNav" class="hover:underline hidden">Logout</button>
+  <header class="flex justify-between p-4 bg-gray-800 text-white">
+    <h1 class="text-xl font-bold">LuxFlix</h1>
+    <nav id="navLinks" class="space-x-4">
+      <a href="login.html" id="loginLink" class="hover:underline">Login</a>
+      <a href="register.html" id="registerLink" class="hover:underline">Register</a>
+    </nav>
+  </header>
+
+  <main class="flex-grow flex items-center justify-center text-center">
+    <div>
+      <h2 class="text-3xl font-bold mb-4">Welcome to LuxFlix</h2>
+      <p class="mb-6">Enjoy endless content after logging in.</p>
+      <button onclick="toggleTheme()" class="bg-gray-600 text-white py-2 px-4 rounded">Toggle Theme</button>
     </div>
-  </nav>
-
-  <main class="p-4">
-    <h2 class="text-2xl font-semibold mb-4">Welcome to LuxFlix Originals</h2>
-    <p>Enjoy exclusive content powered by Firebase Authentication.</p>
   </main>
 
+  <footer class="p-4 text-center text-sm bg-gray-800 text-white">
+    &copy; 2025 LuxFlix. All rights reserved.
+  </footer>
+
   <script type="module" src="js/auth.js"></script>
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      html.classList.toggle("dark");
+      html.classList.toggle("light");
+      localStorage.setItem("theme", html.classList.contains("dark") ? "dark" : "light");
+    }
+  </script>
 </body>
 </html>
