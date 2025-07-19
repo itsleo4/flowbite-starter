@@ -1,38 +1,37 @@
 // js/auth.js
-
-// Firebase Configuration
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
-  signOut,
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  signOut
+} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  appId: "YOUR_APP_ID",
+  apiKey: "YOUR_API_KEY", // REPLACE THIS
+  authDomain: "your-app.firebaseapp.com",
+  projectId: "your-app",
+  storageBucket: "your-app.appspot.com",
+  messagingSenderId: "XXXXX",
+  appId: "YOUR_APP_ID"
 };
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 // Register
-const registerForm = document.getElementById("registerForm");
-if (registerForm) {
-  registerForm.addEventListener("submit", async (e) => {
+const regForm = document.getElementById("registerForm");
+if (regForm) {
+  regForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-
+    const pass = document.getElementById("password").value;
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      // Redirect automatically after success
-      window.location.href = "login.html";
-    } catch (error) {
-      alert("Error: " + error.message);
+      await createUserWithEmailAndPassword(auth, email, pass);
+      window.location.href = "index.html";
+    } catch (err) {
+      alert(err.message);
     }
   });
 }
@@ -43,71 +42,56 @@ if (loginForm) {
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-
+    const pass = document.getElementById("password").value;
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      // Redirect automatically after login
+      await signInWithEmailAndPassword(auth, email, pass);
       window.location.href = "index.html";
-    } catch (error) {
-      alert("Login failed: " + error.message);
+    } catch (err) {
+      alert(err.message);
     }
   });
 }
 
-// Show/hide UI on homepage based on login
-const loginNav = document.getElementById("loginNav");
-const registerNav = document.getElementById("registerNav");
-const logoutNav = document.getElementById("logoutNav");
-const userEmail = document.getElementById("userEmail");
-
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    if (loginNav) loginNav.style.display = "none";
-    if (registerNav) registerNav.style.display = "none";
-    if (logoutNav) logoutNav.style.display = "inline";
-    if (userEmail) userEmail.innerText = user.email;
-  } else {
-    if (loginNav) loginNav.style.display = "inline";
-    if (registerNav) registerNav.style.display = "inline";
-    if (logoutNav) logoutNav.style.display = "none";
-    if (userEmail) userEmail.innerText = "";
-  }
-});
-
 // Logout
-if (logoutNav) {
-  logoutNav.addEventListener("click", async () => {
-    await signOut(auth);
-    window.location.href = "index.html";
+const logoutBtn = document.getElementById("logoutBtn");
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", () => {
+    signOut(auth);
   });
 }
-// UI updates based on auth state
+
+// Check login
 onAuthStateChanged(auth, (user) => {
-  const loginNav = document.getElementById("loginNav");
-  const registerNav = document.getElementById("registerNav");
-  const logoutNav = document.getElementById("logoutNav");
+  const loginBtn = document.getElementById("loginBtn");
+  const registerBtn = document.getElementById("registerBtn");
+  const logoutBtn = document.getElementById("logoutBtn");
   const userEmail = document.getElementById("userEmail");
 
   if (user) {
-    if (loginNav) loginNav.style.display = "none";
-    if (registerNav) registerNav.style.display = "none";
-    if (logoutNav) logoutNav.style.display = "inline-block";
+    if (loginBtn) loginBtn.style.display = "none";
+    if (registerBtn) registerBtn.style.display = "none";
+    if (logoutBtn) logoutBtn.style.display = "block";
     if (userEmail) {
-      userEmail.innerText = user.email;
-      userEmail.style.display = "inline-block";
+      userEmail.style.display = "block";
+      userEmail.textContent = user.email;
     }
   } else {
-    if (loginNav) loginNav.style.display = "inline-block";
-    if (registerNav) registerNav.style.display = "inline-block";
-    if (logoutNav) logoutNav.style.display = "none";
+    if (loginBtn) loginBtn.style.display = "inline";
+    if (registerBtn) registerBtn.style.display = "inline";
+    if (logoutBtn) logoutBtn.style.display = "none";
     if (userEmail) userEmail.style.display = "none";
   }
-
-  if (logoutNav) {
-    logoutNav.addEventListener("click", async () => {
-      await signOut(auth);
-      window.location.href = "index.html";
-    });
-  }
 });
+
+// Theme Toggle
+const themeToggle = document.getElementById("themeToggle");
+if (themeToggle) {
+  themeToggle.addEventListener("click", () => {
+    document.documentElement.classList.toggle("dark");
+    const theme = document.documentElement.classList.contains("dark") ? "dark" : "light";
+    localStorage.setItem("theme", theme);
+  });
+
+  const savedTheme = localStorage.getItem("theme") || "dark";
+  document.documentElement.classList.add(savedTheme);
+}

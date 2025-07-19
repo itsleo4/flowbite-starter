@@ -1,45 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LuxFlix Home</title>
+  <title>LuxFlix</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-  <script>
-    const savedTheme = localStorage.getItem("theme") || "dark";
-    document.documentElement.classList.add(savedTheme);
-  </script>
 </head>
-<body class="dark:bg-gray-900 dark:text-white light:bg-gray-100 light:text-black min-h-screen flex flex-col transition duration-300">
+<body class="bg-gray-900 text-white min-h-screen transition duration-300">
 
-  <header class="flex justify-between p-4 bg-gray-800 text-white">
-    <h1 class="text-xl font-bold">LuxFlix</h1>
-    <nav id="navLinks" class="space-x-4">
-      <a href="login.html" id="loginLink" class="hover:underline">Login</a>
-      <a href="register.html" id="registerLink" class="hover:underline">Register</a>
-    </nav>
+  <header class="flex justify-between items-center px-6 py-4 bg-gray-800">
+    <h1 class="text-2xl font-bold">LuxFlix</h1>
+    <div class="flex items-center gap-4">
+      <button id="themeToggle" class="bg-gray-600 px-3 py-1 rounded">🌗 Toggle Theme</button>
+      <a href="login.html" id="loginBtn" class="text-blue-400 hover:underline">Login</a>
+      <a href="register.html" id="registerBtn" class="text-blue-400 hover:underline">Register</a>
+      <span id="userEmail" class="hidden"></span>
+      <button id="logoutBtn" class="hidden bg-red-600 px-3 py-1 rounded hover:bg-red-700">Logout</button>
+    </div>
   </header>
 
-  <main class="flex-grow flex items-center justify-center text-center">
-    <div>
-      <h2 class="text-3xl font-bold mb-4">Welcome to LuxFlix</h2>
-      <p class="mb-6">Enjoy endless content after logging in.</p>
-      <button onclick="toggleTheme()" class="bg-gray-600 text-white py-2 px-4 rounded">Toggle Theme</button>
-    </div>
+  <main class="p-6">
+    <h2 class="text-xl font-semibold">Welcome to LuxFlix!</h2>
+    <!-- Add your movie grid/content here -->
   </main>
 
-  <footer class="p-4 text-center text-sm bg-gray-800 text-white">
-    &copy; 2025 LuxFlix. All rights reserved.
-  </footer>
-
   <script type="module" src="js/auth.js"></script>
-  <script>
-    function toggleTheme() {
-      const html = document.documentElement;
-      html.classList.toggle("dark");
-      html.classList.toggle("light");
-      localStorage.setItem("theme", html.classList.contains("dark") ? "dark" : "light");
-    }
-  </script>
 </body>
 </html>
