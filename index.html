@@ -2,27 +2,21 @@
 <html lang="en" class="dark">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>LuxFlix</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-900 text-white min-h-screen transition duration-300">
-
-  <header class="flex justify-between items-center px-6 py-4 bg-gray-800">
-    <h1 class="text-2xl font-bold">LuxFlix</h1>
-    <div class="flex items-center gap-4">
-      <button id="themeToggle" class="bg-gray-600 px-3 py-1 rounded">🌗 Toggle Theme</button>
-      <a href="login.html" id="loginBtn" class="text-blue-400 hover:underline">Login</a>
-      <a href="register.html" id="registerBtn" class="text-blue-400 hover:underline">Register</a>
-      <span id="userEmail" class="hidden"></span>
-      <button id="logoutBtn" class="hidden bg-red-600 px-3 py-1 rounded hover:bg-red-700">Logout</button>
+<body class="bg-gray-900 text-white min-h-screen flex flex-col items-center justify-center space-y-4">
+  <div class="text-center">
+    <h1 class="text-3xl font-bold mb-4">Welcome to LuxFlix</h1>
+    <div class="flex justify-center space-x-4">
+      <a id="loginLink" href="login.html" class="px-4 py-2 bg-blue-600 rounded hover:bg-blue-700">Login</a>
+      <a id="registerLink" href="register.html" class="px-4 py-2 bg-green-600 rounded hover:bg-green-700">Register</a>
+      <a id="profileLink" href="#" class="hidden px-4 py-2 bg-yellow-500 rounded hover:bg-yellow-600">Profile</a>
+      <button id="logoutBtn" class="hidden px-4 py-2 bg-red-600 rounded hover:bg-red-700">Logout</button>
     </div>
-  </header>
-
-  <main class="p-6">
-    <h2 class="text-xl font-semibold">Welcome to LuxFlix!</h2>
-    <!-- Add your movie grid/content here -->
-  </main>
+  </div>
+  <button id="themeToggle" class="text-xl mt-8">☀️</button>
 
   <script type="module" src="js/auth.js"></script>
 </body>
