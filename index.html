@@ -2,47 +2,75 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Home</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Luxflix</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
 </head>
-<body>
-  <button id="theme-toggle">🌞</button>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen p-6">
 
-  <div id="navbar">
-    <span id="user-email"></span>
-    <button id="logoutBtn" style="display: none;">Logout</button>
-    <a id="loginLink" href="login.html">Login</a>
-    <a id="registerLink" href="register.html">Register</a>
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold">Welcome to Luxflix</h1>
+    <div>
+      <button id="themeToggle" class="text-2xl mr-4">🌙</button>
+      <button id="logoutBtn" class="bg-red-600 text-white px-4 py-2 rounded hidden">Logout</button>
+      <a href="login.html" id="loginLink" class="text-blue-600 mr-2">Login</a>
+      <a href="register.html" id="registerLink" class="text-blue-600">Register</a>
+    </div>
   </div>
 
-  <h1>Welcome to Luxflix</h1>
-
   <script type="module">
-    import { logoutUser, authListener } from './auth.js';
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
 
-    const logoutBtn = document.getElementById('logoutBtn');
-    const userEmail = document.getElementById('user-email');
-    const loginLink = document.getElementById('loginLink');
-    const registerLink = document.getElementById('registerLink');
+    const firebaseConfig = {
+      apiKey: "AIzaSyA5ahePpuAksgY6dDLfAtNuwGOwe4Xbe7E",
+      authDomain: "luxflix-2455a.firebaseapp.com",
+      projectId: "luxflix-2455a",
+      storageBucket: "luxflix-2455a.appspot.com",
+      messagingSenderId: "166343472796",
+      appId: "1:166343472796:web:373b1fa92ef47305da1f59",
+    };
 
-    authListener((user) => {
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    onAuthStateChanged(auth, (user) => {
+      const loginLink = document.getElementById("loginLink");
+      const registerLink = document.getElementById("registerLink");
+      const logoutBtn = document.getElementById("logoutBtn");
+
       if (user) {
-        userEmail.innerText = `👋 ${user.email}`;
-        logoutBtn.style.display = 'inline-block';
-        loginLink.style.display = 'none';
-        registerLink.style.display = 'none';
+        loginLink.classList.add("hidden");
+        registerLink.classList.add("hidden");
+        logoutBtn.classList.remove("hidden");
       } else {
-        userEmail.innerText = '';
-        logoutBtn.style.display = 'none';
-        loginLink.style.display = 'inline-block';
-        registerLink.style.display = 'inline-block';
+        loginLink.classList.remove("hidden");
+        registerLink.classList.remove("hidden");
+        logoutBtn.classList.add("hidden");
       }
     });
 
-    logoutBtn.onclick = async () => {
-      await logoutUser();
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      signOut(auth).then(() => {
+        window.location.reload();
+      });
+    });
+
+    document.getElementById("themeToggle").onclick = () => {
+      const root = document.documentElement;
+      if (root.classList.contains("dark")) {
+        root.classList.remove("dark");
+        root.classList.add("light");
+        localStorage.setItem("theme", "light");
+      } else {
+        root.classList.remove("light");
+        root.classList.add("dark");
+        localStorage.setItem("theme", "dark");
+      }
     };
   </script>
-  <script src="theme-toggle.js"></script>
 </body>
 </html>

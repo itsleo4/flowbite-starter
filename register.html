@@ -1,22 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Register</title>
-  <link rel="stylesheet" href="style.css">
+  <script>
+    const savedTheme = localStorage.getItem("theme") || "light";
+    document.documentElement.classList.add(savedTheme);
+  </script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
 </head>
-<body>
-  <div class="theme-toggle" onclick="toggleTheme()">
-    <span id="theme-icon">🌞</span>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen flex items-center justify-center">
+
+  <div class="w-full max-w-md p-8 bg-white dark:bg-gray-800 shadow rounded">
+    <div class="flex justify-between items-center mb-4">
+      <h1 class="text-2xl font-bold">Register</h1>
+      <button id="themeToggle" class="text-2xl">🌙</button>
+    </div>
+    <form id="registerForm" class="space-y-4">
+      <input type="email" id="email" placeholder="Email" required class="w-full px-4 py-2 border rounded" />
+      <input type="password" id="password" placeholder="Password" required class="w-full px-4 py-2 border rounded" />
+      <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Register</button>
+    </form>
+    <p class="mt-4 text-center text-sm">Already have an account? <a href="login.html" class="text-blue-500">Login</a></p>
   </div>
 
-  <h2>Register</h2>
-  <input type="email" id="registerEmail" placeholder="Email"><br>
-  <input type="password" id="registerPassword" placeholder="Password"><br>
-  <button onclick="registerUser()">Register</button>
-  <p>Already have an account? <a href="login.html">Login</a></p>
-
-  <script type="module" src="auth.js"></script>
-  <script src="toggle-theme.js"></script>
+  <script type="module" src="js/auth.js"></script>
+  <script>
+    document.getElementById('themeToggle').onclick = () => {
+      const root = document.documentElement;
+      if (root.classList.contains('dark')) {
+        root.classList.remove('dark');
+        root.classList.add('light');
+        localStorage.setItem("theme", "light");
+      } else {
+        root.classList.remove('light');
+        root.classList.add('dark');
+        localStorage.setItem("theme", "dark");
+      }
+    };
+  </script>
 </body>
 </html>
