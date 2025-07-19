@@ -1,7 +1,6 @@
 // firebase-config.js
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getAnalytics } from "firebase/analytics";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA5ahePpuAksgY6dDLfAtNuwGOwe4Xbe7E",
@@ -9,12 +8,10 @@ const firebaseConfig = {
   projectId: "luxflix-2455a",
   storageBucket: "luxflix-2455a.appspot.com",
   messagingSenderId: "166343472796",
-  appId: "1:166343472796:web:373b1fa92ef47305da1f59",
-  measurementId: "G-4HSDMBK1BR"
+  appId: "1:166343472796:web:373b1fa92ef47305da1f59"
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const analytics = getAnalytics(app);
 
 export { auth };

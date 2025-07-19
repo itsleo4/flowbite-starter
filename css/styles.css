@@ -1,35 +1,20 @@
 body {
-  font-family: sans-serif;
   margin: 0;
-  padding: 20px;
-  background: #f0f0f0;
-  color: #333;
-  transition: 0.3s;
+  font-family: sans-serif;
+  background-color: #fff;
+  color: #000;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-.dark-theme {
-  background: #121212;
-  color: #fff;
+body.dark {
+  background-color: #121212;
+  color: #f0f0f0;
 }
 
-.form-box {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 300px;
-  margin: 50px auto;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-input, button {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-}
-
-#theme-toggle {
+.theme-toggle {
   position: fixed;
   top: 10px;
   right: 10px;
+  font-size: 20px;
+  cursor: pointer;
 }
