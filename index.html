@@ -8,17 +8,31 @@
     <script defer src="https://unpkg.com/flowbite@1.6.5/dist/flowbite.min.js"></script>
   </head>
 
-  <body class="bg-black text-white">
+  <body class="bg-black text-white min-h-screen">
     <div class="container mx-auto px-4 py-8">
       <h1 class="text-4xl font-bold mb-4">LuxFlix Originals</h1>
       <input
         type="text"
         placeholder="Search videos..."
-        class="w-full p-2 mb-4 text-black"
+        class="w-full p-2 mb-6 text-black rounded"
+        id="searchBar"
       />
 
-      <div class="flex flex-wrap gap-6" id="video-container">
-        <!-- Video cards will be dynamically loaded here -->
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" id="video-container">
+        <div class="bg-gray-900 rounded-lg p-4">
+          <h2 class="text-xl font-bold">Mind Bender</h2>
+          <p class="text-sm text-gray-400">Sci-Fi</p>
+        </div>
+
+        <div class="bg-gray-900 rounded-lg p-4">
+          <h2 class="text-xl font-bold">Love & Dust</h2>
+          <p class="text-sm text-gray-400">Drama</p>
+        </div>
+
+        <div class="bg-gray-900 rounded-lg p-4">
+          <h2 class="text-xl font-bold">Gun Rush</h2>
+          <p class="text-sm text-gray-400">Action</p>
+        </div>
       </div>
     </div>
 
@@ -26,7 +40,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics-compat.js"></script>
 
-    <!-- Your Firebase Configuration -->
+    <!-- Firebase Config -->
     <script>
       const firebaseConfig = {
         apiKey: "AIzaSyA5ahePpuAksgY6dDLfAtNuwGOwe4Xbe7E",
@@ -42,7 +56,18 @@
       firebase.analytics();
     </script>
 
-    <!-- Your Main Script -->
-    <script src="app.js"></script>
+    <!-- App Logic (optional) -->
+    <script>
+      const searchBar = document.getElementById("searchBar");
+      const cards = document.querySelectorAll("#video-container > div");
+
+      searchBar.addEventListener("input", () => {
+        const query = searchBar.value.toLowerCase();
+        cards.forEach((card) => {
+          const text = card.innerText.toLowerCase();
+          card.style.display = text.includes(query) ? "block" : "none";
+        });
+      });
+    </script>
   </body>
 </html>
