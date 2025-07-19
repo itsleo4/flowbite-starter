@@ -1,91 +1,36 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LuxFlix</title>
-    <link rel="stylesheet" href="./assets/dist/css/main.css" />
-  </head>
-  <body class="bg-black text-white transition-colors duration-500">
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LuxFlix - Originals</title>
+  <link rel="stylesheet" href="./assets/dist/css/main.css" />
+</head>
+<body class="bg-black text-white">
 
-    <!-- Header -->
-    <header class="flex justify-between items-center px-6 py-4 border-b border-gray-800">
-      <h1 class="text-2xl font-bold tracking-wider text-pink-500">LuxFlix</h1>
-      <div class="flex items-center gap-4">
-        <button id="themeToggle" class="p-2 rounded-full bg-gray-800 hover:scale-110 transition">
-          🌗
-        </button>
-        <button id="loginBtn" class="px-4 py-1 rounded-lg bg-pink-600 hover:bg-pink-700 text-white">Login</button>
-        <button id="signupBtn" class="px-4 py-1 rounded-lg bg-white text-pink-600 border border-pink-600 hover:bg-pink-50">Sign Up</button>
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-white text-4xl font-bold mb-6 text-center">LuxFlix Originals</h1>
+    <div id="video-container" class="flex flex-wrap justify-between gap-6">
+      <!-- Video Cards -->
+      <div class="bg-gray-900 rounded-lg p-4 w-full md:w-[48%] lg:w-[31%] shadow-lg">
+        <video controls class="w-full rounded mb-2">
+          <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
+        </video>
+        <h2 class="text-xl font-semibold">Video 1</h2>
+        <p class="text-sm text-gray-400">This is a sample LuxFlix original.</p>
       </div>
-    </header>
 
-    <!-- Hero -->
-    <section class="px-6 py-12 text-center">
-      <h2 class="text-5xl font-bold mb-4">Your Desires. One Platform.</h2>
-      <p class="text-lg text-gray-400">Stream what you crave — no limits, no shame.</p>
-    </section>
+      <div class="bg-gray-900 rounded-lg p-4 w-full md:w-[48%] lg:w-[31%] shadow-lg">
+        <video controls class="w-full rounded mb-2">
+          <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4" />
+        </video>
+        <h2 class="text-xl font-semibold">Video 2</h2>
+        <p class="text-sm text-gray-400">This is a sample LuxFlix original.</p>
+      </div>
 
-    <!-- Video Grid -->
-    <section class="px-6 pb-20 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-      <!-- Giant Black Video Cards -->
-      <div class="bg-gray-900 rounded-2xl p-4 shadow-lg hover:scale-105 transition">
-        <img src="https://placehold.co/600x300/000/fff?text=Video+1" class="rounded-lg" />
-        <p class="mt-2 text-pink-500 font-semibold">Video 1 Title</p>
-      </div>
-      <div class="bg-gray-900 rounded-2xl p-4 shadow-lg hover:scale-105 transition">
-        <img src="https://placehold.co/600x300/111/eee?text=Video+2" class="rounded-lg" />
-        <p class="mt-2 text-pink-500 font-semibold">Video 2 Title</p>
-      </div>
-      <div class="bg-gray-900 rounded-2xl p-4 shadow-lg hover:scale-105 transition">
-        <img src="https://placehold.co/600x300/222/ddd?text=Video+3" class="rounded-lg" />
-        <p class="mt-2 text-pink-500 font-semibold">Video 3 Title</p>
-      </div>
-    </section>
-
-    <!-- LOGIN MODAL -->
-    <div id="loginModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center">
-      <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg w-96 relative">
-        <button id="closeLogin" class="absolute top-2 right-3 text-xl text-gray-500 hover:text-red-500">✖</button>
-        <h2 class="text-2xl font-bold mb-4 text-center text-pink-500">Login to LuxFlix</h2>
-        <input type="email" placeholder="Email" class="w-full p-2 rounded mb-3 bg-gray-100 dark:bg-gray-700" />
-        <input type="password" placeholder="Password" class="w-full p-2 rounded mb-4 bg-gray-100 dark:bg-gray-700" />
-        <button class="w-full bg-pink-600 hover:bg-pink-700 text-white py-2 rounded-lg">Login</button>
-      </div>
+      <!-- Repeat the same structure for Video 3 to 5 -->
     </div>
+  </div>
 
-    <!-- SIGNUP MODAL -->
-    <div id="signupModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center">
-      <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg w-96 relative">
-        <button id="closeSignup" class="absolute top-2 right-3 text-xl text-gray-500 hover:text-red-500">✖</button>
-        <h2 class="text-2xl font-bold mb-4 text-center text-pink-500">Create Your Account</h2>
-        <input type="text" placeholder="Username" class="w-full p-2 rounded mb-3 bg-gray-100 dark:bg-gray-700" />
-        <input type="email" placeholder="Email" class="w-full p-2 rounded mb-3 bg-gray-100 dark:bg-gray-700" />
-        <input type="password" placeholder="Password" class="w-full p-2 rounded mb-4 bg-gray-100 dark:bg-gray-700" />
-        <button class="w-full bg-pink-600 hover:bg-pink-700 text-white py-2 rounded-lg">Sign Up</button>
-      </div>
-    </div>
-
-    <!-- Scripts -->
-    <script>
-      // Theme Toggle
-      const toggleBtn = document.getElementById('themeToggle');
-      toggleBtn.addEventListener('click', () => {
-        document.documentElement.classList.toggle('dark');
-      });
-
-      // Modals
-      const loginBtn = document.getElementById('loginBtn');
-      const signupBtn = document.getElementById('signupBtn');
-      const loginModal = document.getElementById('loginModal');
-      const signupModal = document.getElementById('signupModal');
-      const closeLogin = document.getElementById('closeLogin');
-      const closeSignup = document.getElementById('closeSignup');
-
-      loginBtn.onclick = () => loginModal.classList.remove('hidden');
-      signupBtn.onclick = () => signupModal.classList.remove('hidden');
-      closeLogin.onclick = () => loginModal.classList.add('hidden');
-      closeSignup.onclick = () => signupModal.classList.add('hidden');
-    </script>
-  </body>
+</body>
 </html>

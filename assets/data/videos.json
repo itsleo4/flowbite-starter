@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "title": "Dark Code: Episode 1",
+    "thumbnail": "/assets/thumbnail/video1.jpg",
+    "videoUrl": "/assets/videos/video1.mp4",
+    "category": "Thriller"
+  },
+  {
+    "id": 2,
+    "title": "GlitchVerse: Episode 2",
+    "thumbnail": "/assets/thumbnail/video2.jpg",
+    "videoUrl": "/assets/videos/video2.mp4",
+    "category": "Sci-fi"
+  },
+  {
+    "id": 3,
+    "title": "Synthetic Love",
+    "thumbnail": "/assets/thumbnail/video3.jpg",
+    "videoUrl": "/assets/videos/video3.mp4",
+    "category": "Romance"
+  }
+]
