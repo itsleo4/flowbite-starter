@@ -1,120 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LuxFlix – Originals</title>
-  <link href="https://cdn.jsdelivr.net/npm/flowbite@1.6.5/dist/flowbite.min.css" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <style>
-    body { background-color: #000; color: #fff; }
-    .card {
-      background: #111;
-      border-radius: 1rem;
-      padding: 1rem;
-      transition: 0.3s;
-    }
-    .card:hover {
-      background: #222;
-    }
-    .like-btn:hover {
-      transform: scale(1.1);
-    }
-  </style>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LuxFlix</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <script defer src="https://unpkg.com/flowbite@1.6.5/dist/flowbite.min.js"></script>
+  </head>
 
-<body class="font-sans">
-  <header class="p-6 text-center text-4xl font-bold text-red-500">LuxFlix Originals</header>
+  <body class="bg-black text-white">
+    <div class="container mx-auto px-4 py-8">
+      <h1 class="text-4xl font-bold mb-4">LuxFlix Originals</h1>
+      <input
+        type="text"
+        placeholder="Search videos..."
+        class="w-full p-2 mb-4 text-black"
+      />
 
-  <section class="max-w-4xl mx-auto px-4">
-    <input type="text" id="search" placeholder="Search videos..." class="w-full p-2 rounded mb-4 text-black" />
-    <div id="category-buttons" class="flex flex-wrap gap-2 mb-6"></div>
-    <div id="video-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"></div>
-  </section>
+      <div class="flex flex-wrap gap-6" id="video-container">
+        <!-- Video cards will be dynamically loaded here -->
+      </div>
+    </div>
 
-  <footer class="mt-12 p-6 text-center text-sm text-gray-400">
-    &copy; 2025 LuxFlix • <a href="#" class="underline">Terms</a> • <a href="#" class="underline">Contact</a>
-  </footer>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics-compat.js"></script>
 
-  <script>
-    const videos = [
-      { title: "Mind Bender", category: "Sci-Fi", thumbnail: "https://placehold.co/300x200", video: "#" },
-      { title: "Love & Dust", category: "Drama", thumbnail: "https://placehold.co/300x200", video: "#" },
-      { title: "Gun Rush", category: "Action", thumbnail: "https://placehold.co/300x200", video: "#" },
-      { title: "Zero Signal", category: "Thriller", thumbnail: "https://placehold.co/300x200", video: "#" },
-    ];
+    <!-- Your Firebase Configuration -->
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyA5ahePpuAksgY6dDLfAtNuwGOwe4Xbe7E",
+        authDomain: "luxflix-2455a.firebaseapp.com",
+        projectId: "luxflix-2455a",
+        storageBucket: "luxflix-2455a.firebasestorage.app",
+        messagingSenderId: "166343472796",
+        appId: "1:166343472796:web:373b1fa92ef47305da1f59",
+        measurementId: "G-4HSDMBK1BR"
+      };
 
-    const videoGrid = document.getElementById("video-grid");
-    const categoryButtons = document.getElementById("category-buttons");
-    const searchInput = document.getElementById("search");
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+    </script>
 
-    // Generate random views and store likes per session
-    const viewsMap = {};
-    const likesMap = {};
-
-    videos.forEach(v => {
-      viewsMap[v.title] = (Math.random() * 10 + 1).toFixed(1) + "M views";
-      likesMap[v.title] = 0;
-    });
-
-    function renderVideos(filter = "", category = "All") {
-      videoGrid.innerHTML = "";
-      let filtered = videos.filter(v =>
-        (v.title.toLowerCase().includes(filter.toLowerCase())) &&
-        (category === "All" || v.category === category)
-      );
-
-      if (filtered.length === 0) {
-        videoGrid.innerHTML = "<p class='text-gray-400'>No results found.</p>";
-        return;
-      }
-
-      for (let video of filtered) {
-        let div = document.createElement("div");
-        div.className = "card";
-
-        div.innerHTML = `
-          <img src="${video.thumbnail}" class="rounded mb-2" />
-          <h2 class="text-xl font-semibold">${video.title}</h2>
-          <p class="text-sm text-gray-400 mb-2">${video.category}</p>
-          <div class="flex items-center justify-between text-sm text-gray-400">
-            <span>${viewsMap[video.title]}</span>
-            <div class="flex items-center gap-1">
-              <button class="like-btn text-red-500 text-lg" data-title="${video.title}">❤️</button>
-              <span id="like-count-${video.title}" class="text-white">${likesMap[video.title]}</span>
-            </div>
-          </div>
-        `;
-        videoGrid.appendChild(div);
-      }
-
-      document.querySelectorAll(".like-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const title = btn.dataset.title;
-          likesMap[title]++;
-          document.getElementById(`like-count-${title}`).innerText = likesMap[title];
-        });
-      });
-    }
-
-    function renderCategories() {
-      const cats = ["All", ...new Set(videos.map(v => v.category))];
-      categoryButtons.innerHTML = "";
-      cats.forEach(cat => {
-        let btn = document.createElement("button");
-        btn.className = "bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm";
-        btn.innerText = cat;
-        btn.onclick = () => renderVideos(searchInput.value, cat);
-        categoryButtons.appendChild(btn);
-      });
-    }
-
-    searchInput.addEventListener("input", () => {
-      renderVideos(searchInput.value);
-    });
-
-    renderCategories();
-    renderVideos();
-  </script>
-</body>
+    <!-- Your Main Script -->
+    <script src="app.js"></script>
+  </body>
 </html>
