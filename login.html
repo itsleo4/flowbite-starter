@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <script type="module" src="js/auth.js"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login - LuxFlix</title>
@@ -19,10 +20,12 @@
     </nav>
 
     <!-- Login Form -->
-    <div class="flex items-center justify-center h-[90vh]">
-      <div class="bg-[#1e293b] p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 class="text-2xl font-bold mb-6 text-center">Login to LuxFlix</h2>
-        <form>
+    <form id="login-form" class="space-y-6">
+  <input type="email" id="email" placeholder="Email" required class="w-full p-2 rounded" />
+  <input type="password" id="password" placeholder="Password" required class="w-full p-2 rounded" />
+  <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded w-full">Login</button>
+</form>
+
           <div class="mb-4">
             <label class="block mb-1 text-sm">Email</label>
             <input type="email" class="w-full p-2 rounded bg-[#0f172a] text-white border border-gray-600 focus:outline-none" />

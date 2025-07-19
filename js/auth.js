@@ -1,57 +1,56 @@
-// Firebase Auth Setup
-const firebaseConfig = {
-  apiKey: "AIzaSyA5ahePpuAksgY6dDLfAtNuwGOwe4Xbe7E",
-  authDomain: "luxflix-2455a.firebaseapp.com",
-  projectId: "luxflix-2455a",
-  storageBucket: "luxflix-2455a.appspot.com",
-  messagingSenderId: "166343472796",
-  appId: "1:166343472796:web:373b1fa92ef47305da1f59",
-  measurementId: "G-4HSDMBK1BR"
-};
+// ✅ js/auth.js (Create this new file in your js folder)
 
-firebase.initializeApp(firebaseConfig);
+import { 
+  getAuth, 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword, 
+  onAuthStateChanged, 
+  signOut 
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-// Register user
-async function registerUser() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-  try {
-    await firebase.auth().createUserWithEmailAndPassword(email, password);
-    alert("Registration successful!");
-    window.location.href = "dashboard.html";
-  } catch (error) {
-    alert(error.message);
-  }
-}
+const auth = getAuth();
 
-// Login user
-async function loginUser() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-  try {
-    await firebase.auth().signInWithEmailAndPassword(email, password);
-    alert("Login successful!");
-    window.location.href = "dashboard.html";
-  } catch (error) {
-    alert(error.message);
-  }
-}
+// Register logic
+if (window.location.pathname.includes("register.html")) {
+  const registerForm = document.getElementById("register-form");
+  registerForm?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const email = registerForm["email"].value;
+    const password = registerForm["password"].value;
 
-// Logout user
-function logoutUser() {
-  firebase.auth().signOut().then(() => {
-    alert("Logged out");
-    window.location.href = "login.html";
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        alert("Registered successfully!");
+        window.location.href = "login.html";
+      })
+      .catch((err) => alert(err.message));
   });
 }
 
-// Check auth state
-firebase.auth().onAuthStateChanged(user => {
-  if (user) {
-    document.getElementById("user-email")?.innerText = user.email;
-  } else {
-    if (window.location.pathname.includes("dashboard")) {
-      window.location.href = "login.html";
-    }
+// Login logic
+if (window.location.pathname.includes("login.html")) {
+  const loginForm = document.getElementById("login-form");
+  loginForm?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const email = loginForm["email"].value;
+    const password = loginForm["password"].value;
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        alert("Logged in!");
+        window.location.href = "index.html";
+      })
+      .catch((err) => alert(err.message));
+  });
+}
+
+// Display user status
+onAuthStateChanged(auth, (user) => {
+  const userStatus = document.getElementById("user-status");
+  if (user && userStatus) {
+    userStatus.innerHTML = `👋 Welcome, ${user.email} | <a href="#" id="logout" class="underline">Logout</a>`;
+    document.getElementById("logout")?.addEventListener("click", () => {
+      signOut(auth);
+    });
   }
 });
